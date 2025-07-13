@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { 
-  Container, 
-  Navbar, 
-  Nav, 
-  NavDropdown, 
-  Form, 
+import {
+  Container,
+  Navbar,
+  Nav,
+  NavDropdown,
+  Form,
   FormControl,
-  Button
+  Button,
 } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import logo from "../assets/img-convertly.png";
@@ -15,8 +15,8 @@ import logo from "../assets/img-convertly.png";
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+const [selectedToolName, setSelectedToolName] = useState("Excel ⇄ JSON");
 
-  // Configuration for dropdown items
   const conversionTools = [
     { name: "Excel ⇄ JSON", path: "/excel-to-json" },
     { name: "JSON ⇄ Excel", path: "/json-to-excel" },
@@ -30,19 +30,18 @@ const Header = () => {
     { name: "QR Code Scanner", path: "/qr-scanner" },
     { name: "Barcode to Text", path: "/barcode-to-text" },
     { name: "Base64 ⇄ Text", path: "/base64-decode" },
-    { name: "Text ⇄ URL/HTML Encoder", path: "/text-encoder" }
+    { name: "Text ⇄ URL/HTML Encoder", path: "/text-encoder" },
   ];
 
   const staticLinks = [
     { name: "Pricing", path: "/pricing" },
-    { name: "About", path: "/about" }
+    { name: "About", path: "/about" },
   ];
 
   return (
     <header className="header">
-      {/* SEO Meta Tags */}
       <Helmet>
-        <title>Convertly - Smart Online Data Conversion Tools</title>
+        <title>Converty - Smart Online Data Conversion Tools</title>
         <meta
           name="description"
           content="Convertly offers fast, reliable tools for converting Excel, CSV, JSON, HTML, Base64, QR codes, and more. 100% free and web-based."
@@ -53,7 +52,6 @@ const Header = () => {
         />
       </Helmet>
 
-      {/* Animated Header Wrapper */}
       <motion.div
         initial={{ y: -80 }}
         animate={{ y: 0 }}
@@ -62,7 +60,6 @@ const Header = () => {
       >
         <Navbar expand="lg" variant="dark" className="navbar-custom">
           <Container fluid>
-            {/* Logo/Brand */}
             <Navbar.Brand href="/" className="brand-container">
               <motion.img
                 src={logo}
@@ -72,7 +69,7 @@ const Header = () => {
                 className="logo-img"
                 whileHover={{ rotate: 5 }}
               />
-              <motion.span 
+              <motion.span
                 className="brand-text"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -84,9 +81,12 @@ const Header = () => {
 
             <Navbar.Toggle aria-controls="main-navbar" />
 
-            <Navbar.Collapse id="main-navbar" className="navbar-collapse-custom">
+            <Navbar.Collapse
+              id="main-navbar"
+              className="navbar-collapse-custom"
+            >
               <Nav className="ms-auto align-items-center">
-                {/* Search Bar */}
+                {/* Search Form */}
                 <Form className="search-form">
                   <div className="search-container">
                     <FormControl
@@ -97,22 +97,47 @@ const Header = () => {
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="search-input"
                     />
+
                     <span className="search-icon" aria-hidden="true">
                       <i className="bi bi-search"></i>
                     </span>
+
+                    {/* Live Search Suggestions */}
+                    {searchQuery && (
+                      <div className="search-suggestions">
+                        {conversionTools.filter(tool =>
+                          tool.name.toLowerCase().includes(searchQuery.toLowerCase())
+                        ).map((tool, index) => (
+                          <div
+                            key={index}
+                            className="suggestion-item"
+                            onClick={() => {
+                              window.location.href = tool.path;
+                              setSearchQuery("");
+                              setShowDropdown(false);
+                            }}
+                          >
+                            {tool.name}
+                          </div>
+                        ))}
+                        {conversionTools.filter(tool =>
+                          tool.name.toLowerCase().includes(searchQuery.toLowerCase())
+                        ).length === 0 && (
+                          <div className="suggestion-item text-muted">No tools found.</div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </Form>
 
                 {/* Conversion Tools Dropdown */}
                 <NavDropdown
-                  title={
-                    <motion.span 
-                      className="nav-link-text"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      Excel ⇄ JSON
-                    </motion.span>
-                  }
+                 title={
+  <motion.span className="nav-link-text" whileHover={{ scale: 1.05 }}>
+    {selectedToolName}
+  </motion.span>
+}
+
                   id="conversion-dropdown"
                   show={showDropdown}
                   onMouseEnter={() => setShowDropdown(true)}
@@ -121,33 +146,31 @@ const Header = () => {
                   className="tools-dropdown"
                 >
                   {conversionTools.map((tool, index) => (
-                    <NavDropdown.Item 
-                      key={index} 
+                    <NavDropdown.Item
+                      key={index}
                       href={tool.path}
                       className="dropdown-item"
+                     onClick={() => {
+  setSelectedToolName(tool.name);
+  setShowDropdown(false);
+}}
+
                     >
                       {tool.name}
                     </NavDropdown.Item>
                   ))}
                 </NavDropdown>
 
-                {/* Static Links */}
+                {/* Static Pages */}
                 {staticLinks.map((link, index) => (
-                  <Nav.Link 
-                    key={index} 
-                    href={link.path}
-                    className="nav-link-custom"
-                  >
-                    <motion.span
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
+                  <Nav.Link key={index} href={link.path} className="nav-link-custom">
+                    <motion.span whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                       {link.name}
                     </motion.span>
                   </Nav.Link>
                 ))}
 
-                {/* Support Button */}
+                {/* Developer Support Button */}
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -167,61 +190,47 @@ const Header = () => {
         </Navbar>
       </motion.div>
 
-      {/* CSS Styles */}
+      {/* STYLES */}
       <style jsx>{`
         .header {
           position: relative;
           z-index: 1000;
         }
-        
         .header-wrapper {
-          background:black;
+          background: black;
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
           position: fixed;
           top: 0;
           left: 0;
           right: 0;
         }
-        
         .navbar-custom {
           padding: 0.8rem 0;
         }
-        
         .brand-container {
           display: flex;
           align-items: center;
           margin-right: 2rem;
         }
-        
         .logo-img {
           margin-right: 0.8rem;
           transition: transform 0.3s ease;
         }
-        
         .brand-text {
           font-size: 1.6rem;
           font-weight: 700;
           color: #ffffff;
-          transition: all 0.3s ease;
         }
-        
-        .brand-highlight {
-          color: #00ffff;
-        }
-        
         .navbar-collapse-custom {
           justify-content: flex-end;
         }
-        
         .search-form {
           margin-right: 1.5rem;
         }
-        
         .search-container {
           position: relative;
           min-width: 220px;
         }
-        
         .search-input {
           padding-left: 2.5rem;
           background: #ffffff;
@@ -230,13 +239,10 @@ const Header = () => {
           color: #000;
           font-size: 0.95rem;
           height: 38px;
-          transition: all 0.3s ease;
         }
-        
         .search-input:focus {
           box-shadow: 0 0 0 0.2rem rgba(0, 255, 255, 0.25);
         }
-        
         .search-icon {
           position: absolute;
           left: 0.8rem;
@@ -245,32 +251,44 @@ const Header = () => {
           color: #666;
           pointer-events: none;
         }
-        
+        .search-suggestions {
+          position: absolute;
+          background: #fff;
+          color: #000;
+          z-index: 9999;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          width: 100%;
+          max-height: 220px;
+          overflow-y: auto;
+          margin-top: 0.3rem;
+        }
+        .suggestion-item {
+          padding: 8px 12px;
+          cursor: pointer;
+          border-bottom: 1px solid #f0f0f0;
+        }
+        .suggestion-item:hover {
+          background-color: #f2f2f2;
+        }
         .nav-link-custom {
           color: rgba(255, 255, 255, 0.85) !important;
           font-weight: 500;
           margin: 0 0.8rem;
-          transition: color 0.3s ease;
         }
-        
         .nav-link-custom:hover {
           color: #ffffff !important;
         }
-        
         .tools-dropdown .dropdown-item {
           padding: 0.5rem 1.5rem;
-          transition: all 0.2s ease;
         }
-        
         .tools-dropdown .dropdown-item:hover {
           background-color: rgba(0, 255, 255, 0.1);
           color: #00ffff;
         }
-        
         .support-container {
           margin-left: 1.5rem;
         }
-        
         .support-button {
           background: transparent;
           border: 2px solid #00ffff;
@@ -278,45 +296,23 @@ const Header = () => {
           font-weight: 600;
           padding: 0.5rem 1rem;
           border-radius: 8px;
-          transition: all 0.3s ease;
-          display: flex;
-          align-items: center;
         }
-        
         .support-button:hover {
           background: #00ffff;
           color: #000;
           box-shadow: 0 0 12px #00ffff;
         }
-        
-        .button-icon {
-          margin-right: 0.5rem;
-        }
-        
         @media (max-width: 992px) {
-          .brand-container {
-            margin-right: 1rem;
-          }
-          
           .search-form {
             margin: 1rem 0;
             width: 100%;
           }
-          
-          .search-container {
-            width: 100%;
-          }
-          
           .nav-link-custom {
             margin: 0.5rem 0;
-            padding: 0.5rem 0;
           }
-          
           .support-container {
-            margin: 1rem 0 0 0;
-            width: 100%;
+            margin-top: 1rem;
           }
-          
           .support-button {
             width: 100%;
             justify-content: center;
@@ -327,4 +323,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default Header;
