@@ -1,0 +1,114 @@
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.hero-illustration {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.tool-window {
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tool-tabs {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.tool-tabs .tab {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-right: 8px;
+  font-size: 0.8rem;
+  color: #6c757d;
+  border-radius: 4px;
+}
+
+.tool-tabs .tab.active {
+  background: #0d6efd;
+  color: white;
+}
+
+.tool-content {
+  padding: 16px;
+  background: white;
+  min-height: 200px;
+}
+
+.tool-content pre {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.tool-actions {
+  padding: 8px 16px;
+  background: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  text-align: right;
+}
+
+/* Feature Cards */
+.feature-card {
+  border: none;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.feature-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 110, 253, 0.1);
+  border-radius: 50%;
+  color: #0d6efd;
+}
+
+/* Newsletter Card */
+.newsletter-card {
+  position: relative;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #6c757d;
+  cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .sticky-top {
+    position: static !important;
+  }
+}
+
+/* pricing */
+.hover-effect {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+.hover-effect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
